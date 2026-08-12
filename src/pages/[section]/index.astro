@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPublishedPosts } from '../../lib/posts';
+import { isSection, SECTION_META, SECTIONS } from '../../lib/sections';
+
+export function getStaticPaths() {
+  return SECTIONS.map((section) => ({ params: { section } }));
+}
+
+const { section } = Astro.params;
+
+if (!section || !isSection(section)) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+const meta = SECTION_META[section];
+const posts = (await getPublishedPosts()).filter((post) => post.data.section === section);
+---
+
+<BaseLayout title={meta.label} description={meta.description}>
+  <section class="mb-10 fade-up">
+    <p class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-lilac-deep">
+      Shelf
+    </p>
+    <h1 class="font-serif text-4xl text-ink sm:text-5xl">{meta.label}</h1>
+    <p class="mt-4 max-w-2xl text-lg text-muted">{meta.description}</p>
+  </section>
+
+  {
+    posts.length === 0 ? (
+      <p class="text-muted">Nothing on this shelf yet. Check back soon.</p>
+    ) : (
+      <div class="grid gap-5">
+        {posts.map((post, i) => (
+          <PostCard post={post} style={`animation-delay: ${i * 50}ms`} />
+        ))}
+      </div>
+    )
+  }
+</BaseLayout>

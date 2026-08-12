@@ -1,0 +1,21 @@
+---
+import { SECTION_META, type Section } from '../lib/sections';
+
+interface Props {
+  section: Section;
+  class?: string;
+}
+
+const { section, class: className = '' } = Astro.props;
+const meta = SECTION_META[section];
+---
+
+<span
+  class:list={[
+    'inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide uppercase',
+    meta.accentClass,
+    className,
+  ]}
+>
+  {meta.label}
+</span>

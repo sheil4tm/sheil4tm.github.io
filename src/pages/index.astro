@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPublishedPosts } from '../lib/posts';
+import { SECTIONS, SECTION_META } from '../lib/sections';
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout title="At the Moment">
+  <section class="mb-14 fade-up">
+    <p class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-lilac-deep">
+      Welcome to the library
+    </p>
+    <h1 class="max-w-3xl font-serif text-4xl leading-tight text-ink sm:text-5xl">
+      Thoughts arranged by shelf — books, screens, code, and whatever fits
+      <span class="text-lilac-deep"> at the moment</span>.
+    </h1>
+    <p class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
+      Browse the shelves, follow a tag, or search when you know what you’re looking for.
+    </p>
+  </section>
+
+  <section class="mb-14">
+    <h2 class="mb-5 font-serif text-2xl text-ink">Shelves</h2>
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        SECTIONS.map((section, i) => (
+          <a
+            href={`/${section}/`}
+            class="rounded-card border border-ink/10 bg-surface/70 p-5 shadow-card transition duration-300 hover:-translate-y-0.5 hover:shadow-soft fade-up"
+            style={`animation-delay: ${i * 40}ms`}
+          >
+            <span
+              class:list={[
+                'mb-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide',
+                SECTION_META[section].accentClass,
+              ]}
+            >
+              {SECTION_META[section].label}
+            </span>
+            <p class="text-sm leading-relaxed text-muted">
+              {SECTION_META[section].description}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section>
+    <div class="mb-6 flex items-end justify-between gap-4">
+      <h2 class="font-serif text-2xl text-ink">Latest on the shelves</h2>
+      <a href="/search/" class="text-sm font-semibold text-lilac-deep hover:text-mochi-deep">
+        Search →
+      </a>
+    </div>
+    <div class="grid gap-5">
+      {
+        posts.map((post, i) => (
+          <PostCard post={post} style={`animation-delay: ${i * 50}ms`} />
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

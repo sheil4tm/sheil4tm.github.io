@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Search" description="Search across titles, excerpts, and tags.">
+  <section class="mb-8 fade-up">
+    <p class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-lilac-deep">
+      Find something
+    </p>
+    <h1 class="font-serif text-4xl text-ink sm:text-5xl">Search</h1>
+    <p class="mt-4 max-w-2xl text-lg text-muted">
+      Full-text search over posts — titles, excerpts, and tags.
+    </p>
+  </section>
+
+  <div id="search" class="fade-up rounded-card border border-ink/10 bg-surface/80 p-4 shadow-card sm:p-6"></div>
+</BaseLayout>
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+<script>
+  import { PagefindUI } from '@pagefind/default-ui';
+
+  new PagefindUI({
+    element: '#search',
+    showSubResults: true,
+    showImages: false,
+    resetStyles: false,
+  });
+</script>
+
+<style is:global>
+  .pagefind-ui {
+    --pagefind-ui-primary: rgb(var(--color-lilac-deep));
+    --pagefind-ui-text: rgb(var(--color-text));
+    --pagefind-ui-background: transparent;
+    --pagefind-ui-border: rgb(var(--color-border) / 0.12);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 1rem;
+    --pagefind-ui-font: 'Nunito Sans', ui-sans-serif, sans-serif;
+  }
+
+  .pagefind-ui__search-input {
+    background: rgb(var(--color-bg) / 0.85) !important;
+  }
+</style>

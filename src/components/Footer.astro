@@ -1,0 +1,20 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-20 border-t border-ink/10">
+  <div
+    class="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-10 text-sm text-muted sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p>
+      <span class="font-serif text-ink">At the Moment</span>
+      <span class="mx-2 text-lilac">·</span>
+      thoughts on the shelf, {year}
+    </p>
+    <div class="flex gap-4">
+      <a href="/rss.xml" class="transition hover:text-lilac-deep">RSS</a>
+      <a href="/about/" class="transition hover:text-lilac-deep">About</a>
+      <a href="/search/" class="transition hover:text-lilac-deep">Search</a>
+    </div>
+  </div>
+</footer>

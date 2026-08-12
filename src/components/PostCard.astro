@@ -1,0 +1,58 @@
+---
+import type { Post } from '../lib/posts';
+import { formatDate } from '../lib/posts';
+import { SECTION_META } from '../lib/sections';
+import SectionPill from './SectionPill.astro';
+
+interface Props {
+  post: Post;
+  style?: string;
+}
+
+const { post, style } = Astro.props;
+const sectionLabel = SECTION_META[post.data.section].label;
+---
+
+<article
+  class="group rounded-card bg-surface/80 p-6 shadow-card border border-ink/10 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:shadow-soft fade-up"
+  style={style}
+>
+  <div class="flex flex-wrap items-center gap-2 mb-3">
+    <SectionPill section={post.data.section} />
+    <time class="text-sm text-muted" datetime={post.data.date.toISOString()}>
+      {formatDate(post.data.date)}
+    </time>
+  </div>
+
+  <h2 class="font-serif text-2xl leading-snug text-ink mb-2">
+    <a href={`/posts/${post.id}/`} class="transition hover:text-lilac-deep">
+      {post.data.title}
+    </a>
+  </h2>
+
+  <p class="text-muted leading-relaxed mb-4">
+    {post.data.excerpt}
+  </p>
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div class="flex flex-wrap gap-2">
+      {
+        post.data.tags.slice(0, 3).map((tag) => (
+          <a
+            href={`/tags/${encodeURIComponent(tag)}/`}
+            class="text-xs text-muted transition hover:text-lilac-deep"
+          >
+            #{tag}
+          </a>
+        ))
+      }
+    </div>
+    <a
+      href={`/posts/${post.id}/`}
+      class="text-sm font-semibold text-lilac-deep transition group-hover:text-mochi-deep"
+      aria-label={`Read ${post.data.title} in ${sectionLabel}`}
+    >
+      Read →
+    </a>
+  </div>
+</article>

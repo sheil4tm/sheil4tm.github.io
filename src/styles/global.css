@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: 246 241 234;
+  --color-surface: 255 252 248;
+  --color-text: 61 53 72;
+  --color-muted: 122 112 137;
+  --color-border: 61 53 72;
+
+  --color-lilac: 184 164 212;
+  --color-lilac-soft: 232 223 245;
+  --color-lilac-deep: 127 99 168;
+
+  --color-matcha: 159 191 150;
+  --color-matcha-soft: 228 240 223;
+  --color-matcha-deep: 95 138 87;
+
+  --color-mochi: 229 174 194;
+  --color-mochi-soft: 248 228 236;
+  --color-mochi-deep: 196 116 138;
+
+  --color-shelf-books: 184 164 212;
+  --color-shelf-film: 229 174 194;
+  --color-shelf-series: 159 191 150;
+  --color-shelf-tech: 142 179 212;
+  --color-shelf-esports: 125 179 160;
+  --color-shelf-misc: 196 176 154;
+}
+
+.dark {
+  --color-bg: 26 22 32;
+  --color-surface: 36 31 44;
+  --color-text: 239 232 246;
+  --color-muted: 179 168 194;
+  --color-border: 239 232 246;
+
+  --color-lilac: 201 182 228;
+  --color-lilac-soft: 58 47 77;
+  --color-lilac-deep: 216 198 240;
+
+  --color-matcha: 180 208 171;
+  --color-matcha-soft: 44 58 44;
+  --color-matcha-deep: 199 223 192;
+
+  --color-mochi: 239 192 209;
+  --color-mochi-soft: 61 42 52;
+  --color-mochi-deep: 243 208 221;
+
+  --color-shelf-books: 201 182 228;
+  --color-shelf-film: 239 192 209;
+  --color-shelf-series: 180 208 171;
+  --color-shelf-tech: 168 200 228;
+  --color-shelf-esports: 149 203 184;
+  --color-shelf-misc: 212 196 174;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream text-ink font-sans antialiased;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgb(var(--color-lilac-soft) / 0.9), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgb(var(--color-matcha-soft) / 0.85), transparent 50%),
+    radial-gradient(ellipse 50% 30% at 50% 100%, rgb(var(--color-mochi-soft) / 0.8), transparent 55%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgb(var(--color-lilac-soft));
+  color: rgb(var(--color-lilac-deep));
+}
+
+.prose-post {
+  @apply text-ink leading-relaxed;
+}
+
+.prose-post h2,
+.prose-post h3 {
+  @apply font-serif text-ink mt-10 mb-4;
+}
+
+.prose-post h2 {
+  @apply text-2xl;
+}
+
+.prose-post h3 {
+  @apply text-xl;
+}
+
+.prose-post p {
+  @apply mb-5 text-[1.05rem] leading-8 text-ink/90;
+}
+
+.prose-post ul,
+.prose-post ol {
+  @apply mb-5 pl-6 space-y-2;
+}
+
+.prose-post ul {
+  @apply list-disc;
+}
+
+.prose-post ol {
+  @apply list-decimal;
+}
+
+.prose-post a {
+  @apply text-lilac-deep underline decoration-lilac/50 underline-offset-4 transition-colors hover:text-mochi-deep;
+}
+
+.prose-post blockquote {
+  @apply border-l-4 border-lilac pl-4 italic text-muted my-6;
+}
+
+.prose-post code {
+  @apply rounded-md bg-lilac-soft/60 px-1.5 py-0.5 text-sm font-medium text-lilac-deep;
+}
+
+.prose-post pre {
+  @apply rounded-card bg-surface p-4 overflow-x-auto mb-5 shadow-card border border-ink/10;
+}
+
+.prose-post pre code {
+  @apply bg-transparent p-0 text-ink;
+}
+
+.fade-up {
+  animation: fadeUp 0.55s ease-out both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  html {
+    animation: none !important;
+    scroll-behavior: auto;
+  }
+}

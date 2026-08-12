@@ -1,0 +1,55 @@
+---
+import type { Post } from '../lib/posts';
+import { formatDate } from '../lib/posts';
+import { SECTION_META } from '../lib/sections';
+import BaseLayout from './BaseLayout.astro';
+import SectionPill from '../components/SectionPill.astro';
+import TagPill from '../components/TagPill.astro';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { title, excerpt, date, section, tags, cover } = post.data;
+const sectionMeta = SECTION_META[section];
+---
+
+<BaseLayout title={title} description={excerpt}>
+  <article class="fade-up" data-pagefind-body>
+    <header class="mb-10 max-w-3xl">
+      <div class="mb-4 flex flex-wrap items-center gap-3">
+        <a href={`/${section}/`}>
+          <SectionPill section={section} />
+        </a>
+        <time class="text-sm text-muted" datetime={date.toISOString()}>
+          {formatDate(date)}
+        </time>
+        <span class="text-sm text-muted">· {sectionMeta.label}</span>
+      </div>
+
+      <h1 class="font-serif text-4xl leading-tight text-ink sm:text-5xl" data-pagefind-meta="title">
+        {title}
+      </h1>
+      <p class="mt-4 text-lg leading-relaxed text-muted">{excerpt}</p>
+
+      {
+        cover && (
+          <img
+            src={cover}
+            alt=""
+            class="mt-8 w-full rounded-card object-cover shadow-soft max-h-[26rem]"
+          />
+        )
+      }
+
+      <div class="mt-6 flex flex-wrap gap-2">
+        {tags.map((tag) => <TagPill tag={tag} />)}
+      </div>
+    </header>
+
+    <div class="prose-post max-w-3xl">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

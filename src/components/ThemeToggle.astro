@@ -1,0 +1,23 @@
+---
+// Theme toggle — preference persisted in localStorage
+---
+
+<button
+  type="button"
+  id="theme-toggle"
+  class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink/10 bg-surface/80 text-ink shadow-card transition hover:border-lilac hover:text-lilac-deep"
+  aria-label="Toggle dark mode"
+>
+  <span class="dark:hidden" aria-hidden="true">☾</span>
+  <span class="hidden dark:inline" aria-hidden="true">☀</span>
+</button>
+
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  toggle?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.classList.contains('dark') ? 'light' : 'dark';
+    root.classList.toggle('dark', next === 'dark');
+    localStorage.setItem('theme', next);
+  });
+</script>
