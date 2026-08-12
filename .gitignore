@@ -23,5 +23,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# local-only docs (not pushed)
 sdd-blog-personal.md
 DEPLOY.md
+WRITING.md

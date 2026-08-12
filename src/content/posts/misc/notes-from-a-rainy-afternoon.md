@@ -5,6 +5,7 @@ tags: ["everyday", "journal", "cozy"]
 date: 2026-08-10
 excerpt: "Not every entry needs a category. Sometimes the shelf just holds a rainy window and a warm mug."
 draft: false
+pinned: true
 ---
 
 This one doesn’t belong neatly anywhere — which is exactly why Misc exists.

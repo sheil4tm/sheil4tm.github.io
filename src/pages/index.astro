@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
-import { getPublishedPosts } from '../lib/posts';
+import { getPinnedPosts, getPublishedPosts } from '../lib/posts';
 import { SECTIONS, SECTION_META } from '../lib/sections';
 
 const posts = await getPublishedPosts();
+const pinned = await getPinnedPosts();
+const latest = posts.filter((post) => !post.data.pinned);
 ---
 
 <BaseLayout title="At the Moment">
@@ -48,6 +50,24 @@ const posts = await getPublishedPosts();
     </div>
   </section>
 
+  {
+    pinned.length > 0 && (
+      <section class="mb-14">
+        <div class="mb-6">
+          <p class="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-mochi-deep">
+            Pinned
+          </p>
+          <h2 class="font-serif text-2xl text-ink">Pinned notes</h2>
+        </div>
+        <div class="grid gap-5">
+          {pinned.map((post, i) => (
+            <PostCard post={post} style={`animation-delay: ${i * 50}ms`} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
   <section>
     <div class="mb-6 flex items-end justify-between gap-4">
       <h2 class="font-serif text-2xl text-ink">Latest on the shelves</h2>
@@ -55,12 +75,16 @@ const posts = await getPublishedPosts();
         Search →
       </a>
     </div>
-    <div class="grid gap-5">
-      {
-        posts.map((post, i) => (
-          <PostCard post={post} style={`animation-delay: ${i * 50}ms`} />
-        ))
-      }
-    </div>
+    {
+      latest.length === 0 ? (
+        <p class="text-muted">No other notes on the shelves right now.</p>
+      ) : (
+        <div class="grid gap-5">
+          {latest.map((post, i) => (
+            <PostCard post={post} style={`animation-delay: ${i * 50}ms`} />
+          ))}
+        </div>
+      )
+    }
   </section>
 </BaseLayout>
