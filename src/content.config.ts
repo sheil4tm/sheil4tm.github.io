@@ -22,6 +22,14 @@ const posts = defineCollection({
     cover: z.string().optional(),
     draft: z.boolean().default(false),
     pinned: z.boolean().default(false),
+    rating: z
+      .number()
+      .min(0)
+      .max(5)
+      .refine((value) => value % 0.5 === 0, {
+        message: 'rating must be in steps of 0.5 (e.g. 3, 3.5, 4)',
+      })
+      .optional(),
   }),
 });
 

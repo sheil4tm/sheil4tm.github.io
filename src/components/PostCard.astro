@@ -3,6 +3,7 @@ import type { Post } from '../lib/posts';
 import { formatDate } from '../lib/posts';
 import { SECTION_META } from '../lib/sections';
 import SectionPill from './SectionPill.astro';
+import StarRating from './StarRating.astro';
 
 interface Props {
   post: Post;
@@ -29,6 +30,14 @@ const sectionLabel = SECTION_META[post.data.section].label;
       {post.data.title}
     </a>
   </h2>
+
+  {
+    post.data.rating != null && (
+      <div class="mb-3">
+        <StarRating score={post.data.rating} size="sm" />
+      </div>
+    )
+  }
 
   <p class="text-muted leading-relaxed mb-4">
     {post.data.excerpt}

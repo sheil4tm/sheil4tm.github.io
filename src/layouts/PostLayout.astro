@@ -4,6 +4,7 @@ import { formatDate } from '../lib/posts';
 import { SECTION_META } from '../lib/sections';
 import BaseLayout from './BaseLayout.astro';
 import SectionPill from '../components/SectionPill.astro';
+import StarRating from '../components/StarRating.astro';
 import TagPill from '../components/TagPill.astro';
 
 interface Props {
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, excerpt, date, section, tags, cover } = post.data;
+const { title, excerpt, date, section, tags, cover, rating } = post.data;
 const sectionMeta = SECTION_META[section];
 ---
 
@@ -31,6 +32,11 @@ const sectionMeta = SECTION_META[section];
       <h1 class="font-serif text-4xl leading-tight text-ink sm:text-5xl" data-pagefind-meta="title">
         {title}
       </h1>
+      {rating != null && (
+        <div class="mt-4">
+          <StarRating score={rating} />
+        </div>
+      )}
       <p class="mt-4 text-lg leading-relaxed text-muted">{excerpt}</p>
 
       {

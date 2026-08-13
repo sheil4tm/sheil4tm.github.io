@@ -1,0 +1,49 @@
+---
+interface Props {
+  score: number;
+  size?: 'sm' | 'md';
+}
+
+const { score, size = 'md' } = Astro.props;
+const clamped = Math.min(5, Math.max(0, score));
+const rounded = Math.round(clamped * 2) / 2;
+const fills = Array.from({ length: 5 }, (_, i) => {
+  const remaining = rounded - i;
+  if (remaining >= 1) return 100;
+  if (remaining >= 0.5) return 50;
+  return 0;
+});
+const starSize = size === 'sm' ? '1.05rem' : '1.35rem';
+const label = `${rounded} out of 5 stars`;
+---
+
+<div class="inline-flex items-center gap-2" role="img" aria-label={label}>
+  <span class="inline-flex items-center gap-0.5" aria-hidden="true">
+    {
+      fills.map((fill, i) => (
+        <span class="relative inline-block text-lilac-soft" style={`width:${starSize};height:${starSize}`}>
+          <svg viewBox="0 0 24 24" class="absolute inset-0 h-full w-full fill-current">
+            <path d="M12 2.6l2.7 5.47 6.04.88-4.37 4.26 1.03 6.01L12 16.38 6.6 19.22l1.03-6.01L3.26 8.95l6.04-.88L12 2.6z" />
+          </svg>
+          {
+            fill > 0 && (
+              <svg
+                viewBox="0 0 24 24"
+                class="absolute inset-0 h-full w-full text-lilac-deep"
+                style={fill < 100 ? 'clip-path: inset(0 50% 0 0)' : undefined}
+              >
+                <path
+                  class="fill-current"
+                  d="M12 2.6l2.7 5.47 6.04.88-4.37 4.26 1.03 6.01L12 16.38 6.6 19.22l1.03-6.01L3.26 8.95l6.04-.88L12 2.6z"
+                />
+              </svg>
+            )
+          }
+        </span>
+      ))
+    }
+  </span>
+  <span class:list={['font-medium text-lilac-deep tabular-nums', size === 'sm' ? 'text-xs' : 'text-sm']}>
+    {rounded}/5
+  </span>
+</div>
